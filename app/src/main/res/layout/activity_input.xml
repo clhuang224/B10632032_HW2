@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputActivity"
+    android:paddingTop="@dimen/inputActivityPadding"
+    android:paddingBottom="@dimen/inputActivityPadding">
+
+    <EditText
+        android:id="@+id/et_guestName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/guest_name"
+        android:ems="10"
+        android:hint="@string/guest_name"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/fontSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/et_guestAmount"/>
+
+        <EditText
+            android:id="@+id/et_guestAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/guest_amount"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/fontSize"
+            android:hint="@string/guest_amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_guestName"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout"
+            />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_guestAmount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="?android:attr/buttonBarStyle">
+
+        <Button
+            android:id="@+id/b_submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:layout_marginEnd="@dimen/buttonMargin"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginRight="@dimen/buttonMargin" />
+
+        <Button
+            android:id="@+id/b_cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            style="?android:attr/buttonBarButtonStyle"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
