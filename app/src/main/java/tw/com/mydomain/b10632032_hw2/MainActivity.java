@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
+        switch (requestCode) {
             case 1:
                 if(data.getBooleanExtra("add", false))
                 {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             case 2:
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + resultCode);
+                throw new IllegalStateException("Unexpected value: " + requestCode);
         }
     }
 
