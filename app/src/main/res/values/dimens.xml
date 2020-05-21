@@ -3,4 +3,7 @@
     <dimen name="fontSize">16sp</dimen>
     <dimen name="buttonMargin">30dp</dimen>
     <dimen name="inputActivityPadding">200dp</dimen>
+    <dimen name="circleSize">50dp</dimen>
+    <dimen name="circleMargin">20dp</dimen>
+    <dimen name="listItemPadding">15dp</dimen>
 </resources>
