@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InputActivity"
+    android:orientation="vertical"
     android:paddingTop="@dimen/inputActivityPadding"
-    android:paddingBottom="@dimen/inputActivityPadding">
+    android:paddingBottom="@dimen/inputActivityPadding"
+    tools:context=".InputActivity">
 
     <EditText
         android:id="@+id/et_guestName"
@@ -18,52 +18,52 @@
         android:hint="@string/guest_name"
         android:inputType="textPersonName"
         android:textSize="@dimen/fontSize"
+        app:layout_constraintBottom_toTopOf="@id/et_guestAmount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/et_guestAmount"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/et_guestAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/guest_amount"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textSize="@dimen/fontSize"
-            android:hint="@string/guest_amount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_guestName"
-            app:layout_constraintBottom_toTopOf="@id/linearLayout"
-            />
+    <EditText
+        android:id="@+id/et_guestAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/guest_amount"
+        android:ems="10"
+        android:hint="@string/guest_amount"
+        android:inputType="numberDecimal"
+        android:maxLength="3"
+        android:textSize="@dimen/fontSize"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_guestName" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_guestAmount"
-        app:layout_constraintBottom_toBottomOf="parent"
-        style="?android:attr/buttonBarStyle">
+        app:layout_constraintTop_toBottomOf="@id/et_guestAmount">
 
         <Button
             android:id="@+id/b_submitButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/submit"
             android:layout_marginEnd="@dimen/buttonMargin"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_marginRight="@dimen/buttonMargin" />
+            android:layout_marginRight="@dimen/buttonMargin"
+            android:text="@string/submit" />
 
         <Button
             android:id="@+id/b_cancelButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@string/cancel" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
