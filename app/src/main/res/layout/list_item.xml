@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingVertical="@dimen/listItemPadding">
+
     <TextView
+        android:id="@+id/tv_guestAmount"
         android:layout_width="@dimen/circleSize"
         android:layout_height="@dimen/circleSize"
-        android:gravity="center"
-        android:id="@+id/tv_guestAmount"
-        android:textColor="@color/colorAccent"
+        android:layout_marginHorizontal="20dp"
         android:background="@drawable/circle"
-        android:textSize="@dimen/fontSize"
-        android:layout_marginHorizontal="20dp"/>
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/fontSize" />
+
     <TextView
+        android:id="@+id/tv_guestName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_guestName"
-        android:textSize="@dimen/fontSize"/>
+        android:textSize="@dimen/fontSize" />
 </LinearLayout>
