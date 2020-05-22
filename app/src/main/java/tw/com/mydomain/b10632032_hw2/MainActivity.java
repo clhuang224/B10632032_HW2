@@ -1,22 +1,36 @@
 package tw.com.mydomain.b10632032_hw2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import tw.com.mydomain.b10632032_hw2.data.WaitlistContract;
+import tw.com.mydomain.b10632032_hw2.data.WaitlistDBHelper;
+
 public class MainActivity extends AppCompatActivity {
+
+    private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -38,9 +52,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 1:
-                if(data.getBooleanExtra("add", false))
-                {
-                    // TODO 新增資料到資料庫
+                if (data.getBooleanExtra("add", false)) {
+                    if (addNewTuple(data.getStringExtra("guestName"),
+                            data.getIntExtra("guestAmount", 1))) {
+                        Log.d(LOG_TAG, "Tuple added");
+                        mAdapter.swapCursor(getAllTuples());
+                    }
                 }
                 break;
             case 2:
@@ -51,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    ListAdapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
+
+    SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +81,65 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_list);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ListAdapter(this);
-        recyclerView.setAdapter(adapter);
+
+        WaitlistDBHelper dbHelper = new WaitlistDBHelper(this);
+        mDb = dbHelper.getWritableDatabase();
+
+        mAdapter = new ListAdapter(this, getAllTuples());
+        recyclerView.setAdapter(mAdapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage(R.string.deleteMessage);
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mAdapter.swapCursor(getAllTuples());
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        long itemId = (long) viewHolder.itemView.getTag();
+                        if (removeTuple(itemId)) {
+                            mAdapter.swapCursor(getAllTuples());
+                        }
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }).attachToRecyclerView(recyclerView);
+    }
+
+    private Cursor getAllTuples() {
+        return mDb.query(
+                WaitlistContract.WaitlistEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                WaitlistContract.WaitlistEntry.COLUMN_TIMESTAMP
+        );
+    }
+
+    private boolean addNewTuple(String guestName, int guestAmount) {
+        ContentValues cv = new ContentValues();
+        cv.put(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME, guestName);
+        cv.put(WaitlistContract.WaitlistEntry.COLUMN_GUEST_AMOUNT, guestAmount);
+        return mDb.insert(WaitlistContract.WaitlistEntry.TABLE_NAME, null, cv) != -1;
+    }
+
+    private boolean removeTuple(Long id) {
+        return mDb.delete(WaitlistContract.WaitlistEntry.TABLE_NAME, WaitlistContract.WaitlistEntry._ID + "=" + id, null) > 0;
     }
 }

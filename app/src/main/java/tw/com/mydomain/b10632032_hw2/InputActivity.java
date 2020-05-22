@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class InputActivity extends AppCompatActivity {
 
@@ -29,10 +30,16 @@ public class InputActivity extends AppCompatActivity {
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                intentToReturn.putExtra("add", true);
-                intentToReturn.putExtra("guestName", guestNameEditText.getText());
-                intentToReturn.putExtra("guestAmount", guestAmountEditText.getText());
-                InputActivity.this.finish();
+                if (guestAmountEditText.getText().length() != 0 && guestNameEditText.getText().length() != 0) {
+                    intentToReturn.putExtra("add", true);
+                    intentToReturn.putExtra("guestName", guestNameEditText.getText().toString());
+                    int guestAmount = Integer.parseInt(guestAmountEditText.getText().toString());
+                    intentToReturn.putExtra("guestAmount", guestAmount);
+                    InputActivity.this.finish();
+                } else {
+                    Toast toast = Toast.makeText(InputActivity.this, "欄位請勿空白", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 

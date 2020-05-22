@@ -10,13 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import tw.com.mydomain.b10632032_hw2.data.WaitlistContract;
+
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
     private Context mContext;
-    private String[] test = {"1","2","3"};
+    private Cursor mCursor;
 
-    ListAdapter(Context context) {
+    ListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
+        this.mCursor = cursor;
     }
 
     static class ListViewHolder extends RecyclerView.ViewHolder {
@@ -25,8 +28,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
         ListViewHolder(View itemView) {
             super(itemView);
-            guestAmountTextView =itemView.findViewById(R.id.tv_guestAmount);
-            guestNameTextView =itemView.findViewById(R.id.tv_guestName);
+            guestAmountTextView = itemView.findViewById(R.id.tv_guestAmount);
+            guestNameTextView = itemView.findViewById(R.id.tv_guestName);
         }
     }
 
@@ -40,13 +43,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ListViewHolder listViewHolder, int position) {
-        listViewHolder.guestAmountTextView.setText(test[position]);
-        listViewHolder.guestNameTextView.setText(test[position]);
+    public void onBindViewHolder(@NonNull ListViewHolder listViewHolder, int position) {
+        if (mCursor.moveToPosition(position)) {
+            listViewHolder.itemView.setTag(mCursor.getLong(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry._ID)));
+            listViewHolder.guestAmountTextView.setText(String.valueOf(mCursor.getInt(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_GUEST_AMOUNT))));
+            listViewHolder.guestNameTextView.setText(mCursor.getString(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME)));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return test.length;
+        return mCursor.getCount();
+    }
+
+    void swapCursor(Cursor newCursor) {
+        if (mCursor != null) mCursor.close();
+        mCursor = newCursor;
+        if (newCursor != null) {
+            this.notifyDataSetChanged();
+        }
     }
 }
