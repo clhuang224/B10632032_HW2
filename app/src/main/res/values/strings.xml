@@ -8,4 +8,14 @@
     <string name="delete">刪除</string>
     <string name="deleteMessage">要刪除此筆資料嗎？</string>
     <string name="setting">設定</string>
+
+    <string name="color">顏色</string>
+    <string name="red">紅色</string>
+    <string name="blue">藍色</string>
+    <string name="green">綠色</string>
+
+    <string name="color_key" translatable="false">color</string>
+    <string name="red_value" translatable="false">red</string>
+    <string name="blue_value" translatable="false">blue</string>
+    <string name="green_value" translatable="false">green</string>
 </resources>

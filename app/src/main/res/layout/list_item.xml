@@ -10,9 +10,8 @@
         android:layout_width="@dimen/circleSize"
         android:layout_height="@dimen/circleSize"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/circle"
         android:gravity="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         android:textSize="@dimen/fontSize" />
 
     <TextView

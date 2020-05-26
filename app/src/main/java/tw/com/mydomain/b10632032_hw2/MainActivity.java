@@ -21,9 +21,7 @@ import android.view.MenuItem;
 import tw.com.mydomain.b10632032_hw2.data.WaitlistContract;
 import tw.com.mydomain.b10632032_hw2.data.WaitlistDBHelper;
 
-public class MainActivity extends AppCompatActivity {
-
-    private final static String LOG_TAG = MainActivity.class.getSimpleName();
+public class MainActivity extends AppCompatActivity{
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -55,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 if (data.getBooleanExtra("add", false)) {
                     if (addNewTuple(data.getStringExtra("guestName"),
                             data.getIntExtra("guestAmount", 1))) {
-                        Log.d(LOG_TAG, "Tuple added");
                         mAdapter.swapCursor(getAllTuples());
                     }
                 }
@@ -142,4 +139,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean removeTuple(Long id) {
         return mDb.delete(WaitlistContract.WaitlistEntry.TABLE_NAME, WaitlistContract.WaitlistEntry._ID + "=" + id, null) > 0;
     }
+
+
 }
