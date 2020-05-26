@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intentToStartInputActivity, 1);
                 return true;
             case R.id.mi_setting:
-                Intent intentToStartSettingActivity = new Intent(MainActivity.this, SettingActivity.class);
+                Intent intentToStartSettingActivity = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivityForResult(intentToStartSettingActivity, 2);
                 return true;
             default:
